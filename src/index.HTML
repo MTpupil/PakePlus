@@ -1,0 +1,1447 @@
+<!--
+Ciallo～(∠・ω< )⌒★
+Ciallo～(∠・ω< )⌒★
+Ciallo～(∠・ω< )⌒★
+Ciallo～(∠・ω< )⌒★
+Ciallo～(∠・ω< )⌒★
+Ciallo～(∠・ω< )⌒★
+Ciallo～(∠・ω< )⌒★
+Ciallo～(∠・ω< )⌒★
+Ciallo～(∠・ω< )⌒★
+Ciallo～(∠・ω< )⌒★
+Ciallo～(∠・ω< )⌒★
+Ciallo～(∠・ω< )⌒★
+Ciallo～(∠・ω< )⌒★
+Ciallo～(∠・ω< )⌒★
+Ciallo～(∠・ω< )⌒★
+Ciallo～(∠・ω< )⌒★
+Ciallo～(∠・ω< )⌒★
+Ciallo～(∠・ω< )⌒★
+Ciallo～(∠・ω< )⌒★
+Ciallo～(∠・ω< )⌒★
+Ciallo～(∠・ω< )⌒★
+Ciallo～(∠・ω< )⌒★
+Ciallo～(∠・ω< )⌒★
+Ciallo～(∠・ω< )⌒★
+Ciallo～(∠・ω< )⌒★
+Ciallo～(∠・ω< )⌒★
+-->
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ciallo by.木瞳 v2.8</title>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: url('https://www.loliapi.com/acg/');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            gap: 40px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            padding: 20px;
+            width: 50%;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+            min-width: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .input-module {
+            text-align: center;
+        }
+
+        .display-module {
+            text-align: center;
+        }
+
+        input[type="checkbox"] {
+            display: none;
+        }
+
+        label[for^="rest-day-"] {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            margin: 10px;
+            width: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        input[type="checkbox"]:checked+label[for^="rest-day-"] {
+            background: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(20px);
+            transform: scale(1.1);
+        }
+
+        input[type="time"]:hover,
+        input[type="text"]:hover {
+            transform: scale(1.05);
+            transition: all 0.3s ease;
+        }
+
+        label[for^="rest-day-"]:hover {
+            transform: scale(1.1);
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .card {
+                width: auto;
+                margin-bottom: 20px;
+            }
+
+            input[type="time"],
+            input[type="text"] {
+                font-size: 14px;
+                padding: 3px;
+            }
+
+            label[for^="rest-day-"] {
+                width: 15px;
+                padding: 8px;
+                font-size: 12px;
+            }
+        }
+
+        #work-inputs,
+        #rest-day-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        #work-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        #clock1,
+        #clock2,
+        #earned-salary {
+            transition: all 0.3s ease;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg,
+                    rgba(255, 182, 193, 0.2),
+                    /* 粉红 */
+                    rgba(255, 218, 185, 0.2),
+                    /* 桃色 */
+                    rgba(230, 230, 250, 0.2),
+                    /* 薰衣草 */
+                    rgba(176, 224, 230, 0.2)
+                    /* 浅蓝 */
+                );
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top-color: rgba(255, 182, 193, 0.8);
+            border-right-color: rgba(255, 218, 185, 0.8);
+            border-bottom-color: rgba(230, 230, 250, 0.8);
+            border-left-color: rgba(176, 224, 230, 0.8);
+            animation: spin 1.5s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+                border-top-color: rgba(255, 182, 193, 0.8);
+                border-right-color: rgba(255, 218, 185, 0.8);
+                border-bottom-color: rgba(230, 230, 250, 0.8);
+                border-left-color: rgba(176, 224, 230, 0.8);
+            }
+
+            25% {
+                border-top-color: rgba(255, 218, 185, 0.8);
+                border-right-color: rgba(230, 230, 250, 0.8);
+                border-bottom-color: rgba(176, 224, 230, 0.8);
+                border-left-color: rgba(255, 182, 193, 0.8);
+            }
+
+            50% {
+                border-top-color: rgba(230, 230, 250, 0.8);
+                border-right-color: rgba(176, 224, 230, 0.8);
+                border-bottom-color: rgba(255, 182, 193, 0.8);
+                border-left-color: rgba(255, 218, 185, 0.8);
+            }
+
+            75% {
+                border-top-color: rgba(176, 224, 230, 0.8);
+                border-right-color: rgba(255, 182, 193, 0.8);
+                border-bottom-color: rgba(255, 218, 185, 0.8);
+                border-left-color: rgba(230, 230, 250, 0.8);
+            }
+
+            100% {
+                transform: rotate(360deg);
+                border-top-color: rgba(255, 182, 193, 0.8);
+                border-right-color: rgba(255, 218, 185, 0.8);
+                border-bottom-color: rgba(230, 230, 250, 0.8);
+                border-left-color: rgba(176, 224, 230, 0.8);
+            }
+        }
+
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* 添加过渡动画相关样式 */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    rgba(255, 255, 255, 0) 0%,
+                    rgba(255, 255, 255, 0.2) 50%,
+                    rgba(255, 255, 255, 0) 100%);
+            transform: skewX(-15deg);
+            transition: none;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .card.animating::before {
+            animation: sweep 1s ease-in-out;
+        }
+
+        @keyframes sweep {
+            0% {
+                left: -100%;
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 1;
+            }
+
+            80% {
+                opacity: 1;
+            }
+
+            100% {
+                left: 200%;
+                opacity: 0;
+            }
+        }
+
+        .card-content {
+            transition: opacity 0.3s ease;
+        }
+
+        .card-content.fade-out {
+            opacity: 0;
+        }
+
+        .card-content.fade-in {
+            opacity: 1;
+        }
+
+        .progress-container {
+            position: relative;
+            overflow: visible;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            height: 22px;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            padding: 0;
+        }
+
+        .progress-particles {
+            position: absolute;
+            left: 0; top: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .progress-bar {
+            display: none;
+        }
+
+        #work-days {
+            position: relative;
+            z-index: 2;
+            font-weight: bold;
+            text-align: center;
+            width: 100%;
+            color: #222;
+            font-size: 15px;
+            letter-spacing: 1px;
+            line-height: 22px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+    <div class="container">
+        <div class="card input-module">
+            <div class="card-content">
+                <div id="rest-day-info" style="display: none; text-align: center; font-size: 24px; margin: 20px 0;">
+                    <div id="rest-day-text"></div>
+                </div>
+                <div id="work-inputs">
+                    <div>
+                        <label for="morning-start">上午</label>
+                        <input type="time" id="morning-start" name="morning-start"
+                            style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(12px); border: none; border-radius: 5px; padding: 5px; color: black; margin: 10px 0; text-align: center;">
+                        <span>~</span>
+                        <input type="time" id="morning-end" name="morning-end"
+                            style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(12px); border: none; border-radius: 5px; padding: 5px; color: black; margin: 10px 0; text-align: center;">
+                    </div>
+                    <div>
+                        <label for="afternoon-start">下午</label>
+                        <input type="time" id="afternoon-start" name="afternoon-start"
+                            style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(12px); border: none; border-radius: 5px; padding: 5px; color: black; margin: 10px 0; text-align: center;">
+                        <span>~</span>
+                        <input type="time" id="afternoon-end" name="afternoon-end"
+                            style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(12px); border: none; border-radius: 5px; padding: 5px; color: black; margin: 10px 0; text-align: center;">
+                    </div>
+                    <div>
+                        <label for="monthly-salary">月薪</label>
+                        <input type="text" id="monthly-salary" name="monthly-salary"
+                            style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(12px); border: none; border-radius: 5px; padding: 5px; color: black; margin: 10px 0; -webkit-appearance: textfield; -moz-appearance: textfield; appearance: textfield; text-align: center; outline: none;"
+                            min="0" step="1" oninput="this.value = this.value.replace(/^0|[^0-9]/g, '');">
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px; margin: 10px 0; justify-content: center; width: 100%;">
+                        <label for="work-days" style="min-width: 40px; text-align: left;">天数</label>
+                        <div class="progress-container">
+                            <canvas class="progress-particles"></canvas>
+                            <span id="work-days"></span>
+                        </div>
+                        <span id="progress-percentage">0%</span>
+                    </div>
+                    <div>
+                        <label for="rest-days">休息日</label>
+                        <input type="checkbox" id="rest-day-1" name="rest-days" value="1"
+                            style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(12px); border: none; border-radius: 5px; padding: 5px; color: black; margin: 10px 0; text-align: center;"><label
+                            for="rest-day-1">1</label>
+                        <input type="checkbox" id="rest-day-2" name="rest-days" value="2"
+                            style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(12px); border: none; border-radius: 5px; padding: 5px; color: black; margin: 10px 0; text-align: center;"><label
+                            for="rest-day-2">2</label>
+                        <input type="checkbox" id="rest-day-3" name="rest-days" value="3"
+                            style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(12px); border: none; border-radius: 5px; padding: 5px; color: black; margin: 10px 0; text-align: center;"><label
+                            for="rest-day-3">3</label>
+                        <input type="checkbox" id="rest-day-4" name="rest-days" value="4"
+                            style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(12px); border: none; border-radius: 5px; padding: 5px; color: black; margin: 10px 0; text-align: center;"><label
+                            for="rest-day-4">4</label>
+                        <input type="checkbox" id="rest-day-5" name="rest-days" value="5"
+                            style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(12px); border: none; border-radius: 5px; padding: 5px; color: black; margin: 10px 0; text-align: center;"><label
+                            for="rest-day-5">5</label>
+                        <input type="checkbox" id="rest-day-6" name="rest-days" value="6"
+                            style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(12px); border: none; border-radius: 5px; padding: 5px; color: black; margin: 10px 0; text-align: center;"><label
+                            for="rest-day-6">6</label>
+                        <input type="checkbox" id="rest-day-7" name="rest-days" value="7"
+                            style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(12px); border: none; border-radius: 5px; padding: 5px; color: black; margin: 10px 0; text-align: center;"><label
+                            for="rest-day-7">7</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card display-module">
+            <div class="card-content">
+                <div id="work-display">
+                    <div id="clock1">00:00:00</div>
+                    <div id="clock2">00:00:00</div>
+                    <div id="earned-salary">已摸工资: 0.00</div>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <button id="mode-switch-btn"
+                            style="background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(12px); border: none; border-radius: 5px; padding: 10px 20px; color: black; margin: 20px 0; cursor: pointer; transition: all 0.3s ease;">去休息</button>
+                        <button id="settings-btn"
+                            style="background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(12px); border: none; border-radius: 5px; padding: 10px 20px; color: black; cursor: pointer; transition: all 0.3s ease;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <path
+                                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                                </path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="settings-modal" class="settings-modal hidden">
+            <div class="settings-content">
+                <h3>设置</h3>
+                <div class="setting-item">
+                    <label for="blur-range">模糊调节</label>
+                    <input type="range" id="blur-range" min="0" max="10" value="4" step="0.1">
+                    <span id="blur-value" style="display: inline-block; width: 30px; text-align: right;"></span>
+                </div>
+                <div class="setting-item">
+                    <button id="refresh-bg-btn"
+                        style="background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); border: none; border-radius: 5px; padding: 10px; color: black; cursor: pointer; transition: all 0.3s ease; width: 100%;">刷新壁纸</button>
+                </div>
+            </div>
+        </div>
+        <style>
+            .settings-modal {
+                position: fixed;
+                z-index: 1000;
+                opacity: 1;
+                transition: opacity 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            }
+
+            .settings-modal.hidden {
+                opacity: 0;
+                pointer-events: none;
+            }
+
+            .settings-content {
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(4px);
+                -webkit-backdrop-filter: blur(4px);
+                border-radius: 10px;
+                padding: 20px;
+                transform-origin: top right;
+                transform: scale(0) rotate(-10deg);
+                transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+                animation: settings-bounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            }
+
+            @keyframes settings-bounce {
+                0% {
+                    transform: scale(0) rotate(-10deg);
+                }
+
+                70% {
+                    transform: scale(1.1) rotate(5deg);
+                }
+
+                100% {
+                    transform: scale(1) rotate(0deg);
+                }
+            }
+
+            .settings-modal:not(.hidden) .settings-content {
+                transform: scale(1);
+                animation: settings-bounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            }
+
+            .setting-item {
+                margin: 15px 0;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .setting-item input[type="range"] {
+                flex: 1;
+            }
+
+            #clock1,
+            #clock2 {
+                color: #000000;
+                font-size: 30px;
+                letter-spacing: 5px;
+            }
+
+            #earned-salary {
+                color: #000000;
+                font-size: 30px;
+                margin-top: 20px;
+            }
+
+            .progress-container:hover .progress-bar {
+                box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            }
+
+            #progress-percentage {
+                font-size: 14px;
+            }
+        </style>
+    </div>
+    </div>
+    </div>
+    <script>
+        let holidayData = null;
+        const morningStart = document.getElementById('morning-start');
+        const morningEnd = document.getElementById('morning-end');
+        const afternoonStart = document.getElementById('afternoon-start');
+        const afternoonEnd = document.getElementById('afternoon-end');
+        const monthlySalary = document.getElementById('monthly-salary');
+        const workDays = document.getElementById('work-days');
+        const restDays = document.querySelectorAll('input[name="rest-days"]');
+        const earnedSalary = document.getElementById('earned-salary');
+        const restDayInfo = document.getElementById('rest-day-info');
+        const workInputs = document.getElementById('work-inputs');
+        const workDisplay = document.getElementById('work-display');
+        const modeSwitchBtn = document.getElementById('mode-switch-btn');
+        const restDayText = document.getElementById('rest-day-text');
+        const settingsBtn = document.getElementById('settings-btn');
+        const settingsModal = document.getElementById('settings-modal');
+        const blurRange = document.getElementById('blur-range');
+        const blurValue = document.getElementById('blur-value');
+        const cards = document.querySelectorAll('.card');
+
+        let dayOfWeek = 0;
+        let isHoliday = false;
+        let holidayName = '';
+        let holidayDay = 0;
+        let isRestMode = false;
+
+        // 获取卡片元素的模糊度值
+        const cardStyle = window.getComputedStyle(document.querySelector('.card'));
+        let currentBlur = 4;
+        const backdropFilter = cardStyle.backdropFilter || cardStyle.webkitBackdropFilter || '';
+        const match = backdropFilter.match(/blur\((\d+(\.\d+)?)px\)/);
+        if (match) {
+            currentBlur = parseFloat(match[1]);
+        }
+
+        // 初始化模糊度值
+        blurRange.value = currentBlur;
+        blurValue.textContent = currentBlur;
+
+        // 刷新壁纸按钮点击事件
+        document.getElementById('refresh-bg-btn').addEventListener('click', () => {
+            const timestamp = new Date().getTime();
+            const img = new Image();
+            const currentBgUrl = window.getComputedStyle(document.body).backgroundImage.match(/url\(['"](.*?)['"]\)/)[1];
+            const baseUrl = currentBgUrl.split('?')[0];
+            img.src = `${baseUrl}?t=${timestamp}`;
+            img.onload = () => {
+                document.body.style.background = `url(${img.src})`;
+                document.body.style.backgroundSize = 'cover';
+                document.body.style.backgroundPosition = 'center';
+            };
+        });
+
+        // 设置按钮点击事件
+        settingsBtn.addEventListener('click', () => {
+            const btnRect = settingsBtn.getBoundingClientRect();
+            const modalContent = settingsModal.querySelector('.settings-content');
+            const modalWidth = 300; // 设置弹窗的预估宽度
+            const modalHeight = 150; // 设置弹窗的预估高度
+
+            // 计算最佳位置
+            let top = btnRect.top;
+            let right = window.innerWidth - btnRect.right;
+
+            // 检查是否会超出底部
+            if (top + modalHeight > window.innerHeight) {
+                top = window.innerHeight - modalHeight - 10;
+            }
+
+            // 检查是否会超出顶部
+            if (top < 10) {
+                top = 10;
+            }
+
+            // 检查是否会超出右侧
+            if (right + modalWidth > window.innerWidth) {
+                right = window.innerWidth - modalWidth - 10;
+            }
+
+            // 检查是否会超出左侧
+            if (right < 10) {
+                right = 10;
+            }
+
+            settingsModal.style.top = `${top}px`;
+            settingsModal.style.right = `${right}px`;
+
+            if (settingsModal.classList.contains('hidden')) {
+                settingsModal.classList.remove('hidden');
+            } else {
+                settingsModal.classList.add('hidden');
+            }
+        });
+
+        // 点击模态框背景关闭
+        document.addEventListener('click', (e) => {
+            if (!settingsBtn.contains(e.target) && !settingsModal.querySelector('.settings-content').contains(e.target)) {
+                settingsModal.classList.add('hidden');
+            }
+        });
+
+        // 模糊度调节
+        blurRange.addEventListener('input', (e) => {
+            currentBlur = e.target.value;
+            blurValue.textContent = currentBlur;
+            cards.forEach(card => {
+                card.style.backdropFilter = `blur(${currentBlur}px)`;
+                card.style.webkitBackdropFilter = `blur(${currentBlur}px)`;
+            });
+            // 同步设置弹窗的模糊度
+            const settingsContent = document.querySelector('.settings-content');
+            settingsContent.style.backdropFilter = `blur(${currentBlur}px)`;
+            settingsContent.style.webkitBackdropFilter = `blur(${currentBlur}px)`;
+            const refreshBgBtn = document.getElementById('refresh-bg-btn');
+            refreshBgBtn.style.backdropFilter = `blur(${currentBlur}px)`;
+            refreshBgBtn.style.webkitBackdropFilter = `blur(${currentBlur}px)`;
+            // 确保标签文字不被覆盖
+            document.querySelector('label[for="blur-range"]').style.zIndex = '1';
+            document.querySelector('label[for="blur-range"]').style.position = 'relative';
+        });
+
+
+
+        const fetchHolidayData = async () => {
+            if (holidayData) return holidayData;
+            try {
+                const response = await fetch('https://www.shuyz.com/githubfiles/china-holiday-calender/master/holidayCal.ics');
+                holidayData = await response.text();
+                return holidayData;
+            } catch (error) {
+                console.error('获取节假日信息失败: ', error);
+                return '';
+            }
+        };
+
+        // 添加新的函数来处理休息日信息更新
+        const updateRestDayInfo = () => {
+            const today = new Date();
+            const currentDayOfWeek = today.getDay();
+            const todayDate = `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, '0')}${String(today.getDate()).padStart(2, '0')}`;
+            const weekDays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+            let restDayMessages = [];
+
+            // 检查是否是休息日
+            const restDaysValue = [];
+            restDays.forEach(restDay => {
+                if (restDay.checked) restDaysValue.push(restDay.value);
+            });
+            const isRestDay = restDaysValue.includes((currentDayOfWeek === 0 ? 7 : currentDayOfWeek).toString());
+
+            // 检查是否是节假日
+            let isHoliday = false;
+            let holidayName = '';
+            let holidayDay = 0;
+
+            if (holidayData) {
+                const lines = holidayData.split('\n');
+                let currentEvent = {};
+                lines.forEach(line => {
+                    if (line.startsWith('BEGIN:VEVENT')) {
+                        currentEvent = {};
+                    } else if (line.startsWith('DTSTART;VALUE=DATE:')) {
+                        const dateStr = line.split(':')[1];
+                        currentEvent.startDate = dateStr;
+                    } else if (line.startsWith('SUMMARY:')) {
+                        const summary = line.split(':')[1];
+                        if (summary.includes('假期')) {
+                            currentEvent.holidayName = summary.split(' 假期')[0];
+                            const dayMatch = summary.match(/第(\d+)天/);
+                            if (dayMatch) {
+                                currentEvent.holidayDay = parseInt(dayMatch[1]);
+                            }
+                        }
+                    } else if (line.startsWith('END:VEVENT')) {
+                        if (currentEvent.startDate === todayDate) {
+                            isHoliday = true;
+                            holidayName = currentEvent.holidayName;
+                            holidayDay = currentEvent.holidayDay;
+                        }
+                    }
+                });
+            }
+
+            // 添加休息日信息
+            if (isRestDay) {
+                restDayMessages.push(`${weekDays[currentDayOfWeek]}（休息日）`);
+            }
+
+            // 添加节假日信息
+            if (isHoliday) {
+                restDayMessages.push(`${holidayName}假期（第${holidayDay}天）`);
+            }
+
+            // 如果没有特殊信息，显示普通休息信息
+            if (restDayMessages.length === 0) {
+                restDayText.innerHTML = `今天是${weekDays[currentDayOfWeek]}，记得好好爱自己`;
+            } else {
+                restDayText.innerHTML = restDayMessages.join('<br>');
+            }
+
+            return { isRestDay, isHoliday };
+        };
+
+        const updateDisplay = (forceRestMode = false) => {
+            // 获取当前日期信息
+            const today = new Date();
+            const currentDayOfWeek = today.getDay();
+            const todayDate = `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, '0')}${String(today.getDate()).padStart(2, '0')}`;
+
+            // 获取休息日设置
+            const restDaysValue = [];
+            restDays.forEach(restDay => {
+                if (restDay.checked) restDaysValue.push(restDay.value);
+            });
+
+            // 判断是否是休息日
+            const isRestDay = restDaysValue.includes((currentDayOfWeek === 0 ? 7 : currentDayOfWeek).toString());
+
+            // 判断是否是节假日
+            let isHoliday = false;
+            let holidayName = '';
+            let holidayDay = 0;
+
+            // 从节假日数据中判断
+            if (holidayData) {
+                const lines = holidayData.split('\n');
+                let currentEvent = {};
+                lines.forEach(line => {
+                    if (line.startsWith('BEGIN:VEVENT')) {
+                        currentEvent = {};
+                    } else if (line.startsWith('DTSTART;VALUE=DATE:')) {
+                        const dateStr = line.split(':')[1];
+                        currentEvent.startDate = dateStr;
+                    } else if (line.startsWith('SUMMARY:')) {
+                        const summary = line.split(':')[1];
+                        if (summary.includes('假期')) {
+                            currentEvent.holidayName = summary.split(' 假期')[0];
+                            const dayMatch = summary.match(/第(\d+)天/);
+                            if (dayMatch) {
+                                currentEvent.holidayDay = parseInt(dayMatch[1]);
+                            }
+                        }
+                    } else if (line.startsWith('END:VEVENT')) {
+                        if (currentEvent.startDate === todayDate) {
+                            isHoliday = true;
+                            holidayName = currentEvent.holidayName;
+                            holidayDay = currentEvent.holidayDay;
+                        }
+                    }
+                });
+            }
+
+            // 判断是否应该显示休息模式
+            // 如果是强制休息模式，则显示休息模式
+            // 如果是强制工作模式，则显示工作模式
+            // 否则根据当前日期判断
+            const shouldShowRestMode = forceRestMode || (isRestDay || isHoliday);
+
+            // 调试信息
+            console.log("当前日期:", todayDate);
+            console.log("当前星期:", currentDayOfWeek);
+            console.log("是否休息日:", isRestDay);
+            console.log("是否节假日:", isHoliday);
+            console.log("强制模式:", forceRestMode);
+            console.log("应该显示休息模式:", shouldShowRestMode);
+
+            // 更新显示内容
+            if (shouldShowRestMode) {
+                // 显示休息模式
+                workInputs.style.display = 'none';
+                restDayInfo.style.display = 'block';
+                document.getElementById('clock1').style.display = 'none';
+                document.getElementById('clock2').style.display = 'none';
+                document.getElementById('earned-salary').style.display = 'none';
+
+                // 设置按钮文本
+                modeSwitchBtn.textContent = '去摸鱼';
+
+                // 更新休息日信息
+                updateRestDayInfo();
+            } else {
+                // 显示工作模式
+                workInputs.style.display = 'block';
+                restDayInfo.style.display = 'none';
+                document.getElementById('clock1').style.display = 'block';
+                document.getElementById('clock2').style.display = 'block';
+                document.getElementById('earned-salary').style.display = 'block';
+
+                // 设置按钮文本
+                modeSwitchBtn.textContent = '去休息';
+            }
+
+            // 更新全局状态
+            isRestMode = shouldShowRestMode;
+        };
+
+        const toggleMode = () => {
+            // 获取所有卡片
+            const cards = document.querySelectorAll('.card');
+            const cardContents = document.querySelectorAll('.card-content');
+
+            // 添加动画类
+            cards.forEach(card => {
+                card.classList.add('animating');
+            });
+
+            // 内容淡出
+            cardContents.forEach(content => {
+                content.classList.add('fade-out');
+            });
+
+            // 等待动画完成
+            setTimeout(() => {
+                // 切换模式
+                isRestMode = !isRestMode;
+
+                // 强制更新显示
+                workInputs.style.display = isRestMode ? 'none' : 'block';
+                restDayInfo.style.display = isRestMode ? 'block' : 'none';
+                document.getElementById('clock1').style.display = isRestMode ? 'none' : 'block';
+                document.getElementById('clock2').style.display = isRestMode ? 'none' : 'block';
+                document.getElementById('earned-salary').style.display = isRestMode ? 'none' : 'block';
+
+                // 设置按钮文本
+                modeSwitchBtn.textContent = isRestMode ? '去摸鱼' : '去休息';
+
+                // 如果是休息模式，更新休息日信息
+                if (isRestMode) {
+                    updateRestDayInfo();
+                }
+
+                // 更新时钟显示
+                updateClock();
+
+                // 内容淡入
+                cardContents.forEach(content => {
+                    content.classList.remove('fade-out');
+                    content.classList.add('fade-in');
+                });
+
+                // 移除动画类
+                setTimeout(() => {
+                    cards.forEach(card => {
+                        card.classList.remove('animating');
+                    });
+                }, 1000);
+
+                // 调试信息
+                console.log("模式切换:", isRestMode ? "休息模式" : "工作模式");
+                console.log("工作区显示:", workInputs.style.display);
+                console.log("休息区显示:", restDayInfo.style.display);
+            }, 300);
+        };
+
+        modeSwitchBtn.addEventListener('click', toggleMode);
+
+        const loadPageAfterBg = async () => {
+            const morningStartValue = localStorage.getItem('morning-start');
+            const morningEndValue = localStorage.getItem('morning-end');
+            const afternoonStartValue = localStorage.getItem('afternoon-start');
+            const afternoonEndValue = localStorage.getItem('afternoon-end');
+            const monthlySalaryValue = localStorage.getItem('monthly-salary');
+            const workDaysValue = localStorage.getItem('work-days');
+            const restDaysValue = JSON.parse(localStorage.getItem('rest-days')) || [];
+
+            if (morningStartValue) morningStart.value = morningStartValue;
+            if (morningEndValue) morningEnd.value = morningEndValue;
+            if (afternoonStartValue) afternoonStart.value = afternoonStartValue;
+            if (afternoonEndValue) afternoonEnd.value = afternoonEndValue;
+            if (monthlySalaryValue) monthlySalary.value = monthlySalaryValue;
+            // 不再从localStorage加载上班天数，因为现在格式已经改变，需要重新计算
+            // if (workDaysValue) workDays.textContent = workDaysValue;
+
+            restDays.forEach(restDay => {
+                restDay.checked = restDaysValue.includes(restDay.value);
+            });
+
+            await getWorkingDays();
+
+            // 获取节假日数据
+            await fetchHolidayData();
+
+            // 更新显示
+            updateDisplay();
+            updateClock();
+            
+            // 启动进度条实时更新
+            setInterval(() => {
+                updateDailyProgress(true);
+            }, 1000);
+        };
+
+        const loadingOverlay = document.querySelector('.loading-overlay');
+        const container = document.querySelector('.container');
+
+        // 初始化时隐藏容器
+        container.style.display = 'none';
+
+        // 等待所有资源加载完成
+        window.addEventListener('load', async () => {
+
+
+            // 等待节假日数据加载
+            await fetchHolidayData();
+
+            // 等待页面初始化完成
+            await loadPageAfterBg();
+
+            // 显示容器，隐藏加载遮罩
+            container.style.display = 'flex';
+            loadingOverlay.classList.add('hidden');
+
+            // 等待过渡动画完成后再移除遮罩
+            setTimeout(() => {
+                loadingOverlay.style.display = 'none';
+            }, 500);
+        });
+
+        const inputs = [morningStart, morningEnd, afternoonStart, afternoonEnd, monthlySalary];
+        inputs.forEach(input => {
+            input.addEventListener('change', () => {
+                localStorage.setItem(input.id, input.value);
+                // 更新时间设置后，重新计算进度
+                if (input.id.includes('start') || input.id.includes('end')) {
+                    updateDailyProgress(true);
+                }
+            });
+        });
+
+        restDays.forEach(restDay => {
+            restDay.addEventListener('change', () => {
+                const selectedRestDays = [];
+                restDays.forEach(day => {
+                    if (day.checked) selectedRestDays.push(day.value);
+                });
+                localStorage.setItem('rest-days', JSON.stringify(selectedRestDays));
+                getWorkingDays();
+                // 休息日设置改变后，重新计算进度
+                setTimeout(() => {
+                    updateDailyProgress(true);
+                }, 100);
+            });
+        });
+
+        const getWorkingDays = async () => {
+            try {
+                const data = await fetchHolidayData();
+                const currentDate = new Date();
+                const currentMonth = currentDate.getMonth() + 1;
+                const currentYear = currentDate.getFullYear();
+                const currentDay = currentDate.getDate();
+                const restDays = [];
+                document.querySelectorAll('input[name="rest-days"]:checked').forEach(checkbox => {
+                    restDays.push(parseInt(checkbox.value));
+                });
+
+                const holidays = [];
+                const workdays = [];
+                const lines = data.split('\n');
+                let currentEvent = {};
+                lines.forEach(line => {
+                    if (line.startsWith('BEGIN:VEVENT')) {
+                        currentEvent = {};
+                    } else if (line.startsWith('DTSTART;VALUE=DATE:')) {
+                        const dateStr = line.split(':')[1];
+                        const year = parseInt(dateStr.slice(0, 4));
+                        const month = parseInt(dateStr.slice(4, 6));
+                        const day = parseInt(dateStr.slice(6, 8));
+                        if (year === currentYear && month === currentMonth) {
+                            holidays.push(day);
+                        }
+                    } else if (line.startsWith('DTSTART:')) {
+                        const dateStr = line.split(':')[1].slice(0, 8);
+                        const year = parseInt(dateStr.slice(0, 4));
+                        const month = parseInt(dateStr.slice(4, 6));
+                        const day = parseInt(dateStr.slice(6, 8));
+                        currentEvent.startDate = { year, month, day };
+                    } else if (line.includes('compensateday')) {
+                        if (currentEvent.startDate && currentEvent.startDate.year === currentYear && currentEvent.startDate.month === currentMonth) {
+                            workdays.push(currentEvent.startDate.day);
+                        }
+                    } else if (line.startsWith('END:VEVENT')) {
+                        currentEvent = {};
+                    }
+                });
+
+                const daysInMonth = new Date(currentYear, currentMonth, 0).getDate();
+                let totalWorkingDays = 0;
+                let workedDays = 0;
+                let isTodayWorkingDay = false;
+                
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const date = new Date(currentYear, currentMonth - 1, day);
+                    const dayOfWeek = date.getDay();
+                    let isWorkingDay = false;
+                    
+                    if (restDays.includes(dayOfWeek + 1)) {
+                        if (workdays.includes(day)) {
+                            isWorkingDay = true;
+                        }
+                    } else {
+                        if (!holidays.includes(day)) {
+                            isWorkingDay = true;
+                        }
+                    }
+                    
+                    if (isWorkingDay) {
+                        totalWorkingDays++;
+                        // 如果这一天已经过了，且是工作日，则计入已上班天数
+                        if (day <= currentDay) {
+                            workedDays++;
+                        }
+                        // 检查今天是否是工作日
+                        if (day === currentDay) {
+                            isTodayWorkingDay = true;
+                        }
+                    }
+                }
+
+                const workDaysInput = document.getElementById('work-days');
+                workDaysInput.textContent = `${workedDays}/${totalWorkingDays}`;
+                
+                // 计算当天进度
+                updateDailyProgress(isTodayWorkingDay);
+            } catch (error) {
+                console.error('获取节假日调休信息失败: ', error);
+            }
+        };
+
+        getWorkingDays();
+
+        // 计算当天工作进度
+        function updateDailyProgress(isTodayWorkingDay) {
+            const progressBar = document.querySelector('.progress-bar');
+            const progressPercentage = document.getElementById('progress-percentage');
+            
+            if (!isTodayWorkingDay) {
+                // 如果不是工作日，进度条显示为0%
+                if (progressBar) {
+                    progressBar.style.width = '0%';
+                }
+                if (progressPercentage) {
+                    progressPercentage.textContent = '0%';
+                }
+                return;
+            }
+
+            const now = new Date();
+            const currentTime = now.getHours() * 60 + now.getMinutes(); // 当前时间（分钟）
+            
+            // 获取工作时间设置
+            let morningStartTime = 9 * 60; // 默认9:00
+            let morningEndTime = 12 * 60;   // 默认12:00
+            let afternoonStartTime = 13 * 60; // 默认13:00
+            let afternoonEndTime = 18 * 60;   // 默认18:00
+            
+            try {
+                const morningStartParts = morningStart.value.split(':');
+                if (morningStartParts.length === 2) {
+                    morningStartTime = parseInt(morningStartParts[0]) * 60 + parseInt(morningStartParts[1]);
+                }
+                
+                const morningEndParts = morningEnd.value.split(':');
+                if (morningEndParts.length === 2) {
+                    morningEndTime = parseInt(morningEndParts[0]) * 60 + parseInt(morningEndParts[1]);
+                }
+                
+                const afternoonStartParts = afternoonStart.value.split(':');
+                if (afternoonStartParts.length === 2) {
+                    afternoonStartTime = parseInt(afternoonStartParts[0]) * 60 + parseInt(afternoonStartParts[1]);
+                }
+                
+                const afternoonEndParts = afternoonEnd.value.split(':');
+                if (afternoonEndParts.length === 2) {
+                    afternoonEndTime = parseInt(afternoonEndParts[0]) * 60 + parseInt(afternoonEndParts[1]);
+                }
+            } catch (error) {
+                console.error('解析工作时间失败:', error);
+            }
+            
+            const totalWorkTime = (afternoonEndTime - afternoonStartTime) + (morningEndTime - morningStartTime);
+            let progress = 0;
+            
+            if (currentTime < morningStartTime) {
+                // 还没开始工作
+                progress = 0;
+            } else if (currentTime >= morningStartTime && currentTime <= morningEndTime) {
+                // 上午工作时间
+                progress = (currentTime - morningStartTime) / totalWorkTime;
+            } else if (currentTime > morningEndTime && currentTime < afternoonStartTime) {
+                // 午休时间
+                progress = (morningEndTime - morningStartTime) / totalWorkTime;
+            } else if (currentTime >= afternoonStartTime && currentTime <= afternoonEndTime) {
+                // 下午工作时间
+                const morningWorkTime = morningEndTime - morningStartTime;
+                const afternoonWorkTime = currentTime - afternoonStartTime;
+                progress = (morningWorkTime + afternoonWorkTime) / totalWorkTime;
+            } else {
+                // 工作结束
+                progress = 1;
+            }
+            
+            // 确保进度在0-1之间
+            progress = Math.max(0, Math.min(1, progress));
+            
+            // 更新进度条
+            if (progressBar) {
+                progressBar.style.width = `${progress * 100}%`;
+            }
+            
+            // 更新百分比显示
+            if (progressPercentage) {
+                progressPercentage.textContent = `${Math.round(progress * 100)}%`;
+            }
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const morningStartValue = new Date();
+            try {
+                const morningStartParts = morningStart.value.split(':');
+                if (morningStartParts.length === 2 &&
+                    !isNaN(parseInt(morningStartParts[0])) &&
+                    !isNaN(parseInt(morningStartParts[1]))) {
+                    morningStartValue.setHours(parseInt(morningStartParts[0]));
+                    morningStartValue.setMinutes(parseInt(morningStartParts[1]));
+                    morningStartValue.setSeconds(0);
+                } else {
+                    morningStartValue.setHours(9);
+                    morningStartValue.setMinutes(0);
+                    morningStartValue.setSeconds(0);
+                    morningStart.value = '09:00';
+                }
+            } catch (error) {
+                console.error('Error setting morning start time:', error);
+                morningStartValue.setHours(9);
+                morningStartValue.setMinutes(0);
+                morningStartValue.setSeconds(0);
+                morningStart.value = '09:00';
+            }
+            const morningEndValue = new Date();
+            try {
+                const morningEndParts = morningEnd.value.split(':');
+                if (morningEndParts.length === 2 &&
+                    !isNaN(parseInt(morningEndParts[0])) &&
+                    !isNaN(parseInt(morningEndParts[1]))) {
+                    morningEndValue.setHours(parseInt(morningEndParts[0]));
+                    morningEndValue.setMinutes(parseInt(morningEndParts[1]));
+                    morningEndValue.setSeconds(0);
+                } else {
+                    morningEndValue.setHours(12);
+                    morningEndValue.setMinutes(0);
+                    morningEndValue.setSeconds(0);
+                    morningEnd.value = '12:00';
+                }
+            } catch (error) {
+                console.error('Error setting morning end time:', error);
+                morningEndValue.setHours(12);
+                morningEndValue.setMinutes(0);
+                morningEndValue.setSeconds(0);
+                morningEnd.value = '12:00';
+            }
+            const afternoonStartValue = new Date();
+            try {
+                const afternoonStartParts = afternoonStart.value.split(':');
+                if (afternoonStartParts.length === 2 &&
+                    !isNaN(parseInt(afternoonStartParts[0])) &&
+                    !isNaN(parseInt(afternoonStartParts[1]))) {
+                    afternoonStartValue.setHours(parseInt(afternoonStartParts[0]));
+                    afternoonStartValue.setMinutes(parseInt(afternoonStartParts[1]));
+                    afternoonStartValue.setSeconds(0);
+                } else {
+                    afternoonStartValue.setHours(13);
+                    afternoonStartValue.setMinutes(0);
+                    afternoonStartValue.setSeconds(0);
+                    afternoonStart.value = '13:00';
+                }
+            } catch (error) {
+                console.error('Error setting afternoon start time:', error);
+                afternoonStartValue.setHours(13);
+                afternoonStartValue.setMinutes(0);
+                afternoonStartValue.setSeconds(0);
+                afternoonStart.value = '13:00';
+            }
+            const afternoonEndValue = new Date();
+            try {
+                const afternoonEndParts = afternoonEnd.value.split(':');
+                if (afternoonEndParts.length === 2 &&
+                    !isNaN(parseInt(afternoonEndParts[0])) &&
+                    !isNaN(parseInt(afternoonEndParts[1]))) {
+                    afternoonEndValue.setHours(parseInt(afternoonEndParts[0]));
+                    afternoonEndValue.setMinutes(parseInt(afternoonEndParts[1]));
+                    afternoonEndValue.setSeconds(0);
+                } else {
+                    afternoonEndValue.setHours(18);
+                    afternoonEndValue.setMinutes(0);
+                    afternoonEndValue.setSeconds(0);
+                    afternoonEnd.value = '18:00';
+                }
+            } catch (error) {
+                console.error('Error setting afternoon end time:', error);
+                afternoonEndValue.setHours(18);
+                afternoonEndValue.setMinutes(0);
+                afternoonEndValue.setSeconds(0);
+                afternoonEnd.value = '18:00';
+            }
+            let morningDiff = morningEndValue - now;
+            let afternoonDiff = afternoonEndValue - now;
+            let morningTimeString = '00:00:00';
+            let afternoonTimeString = '00:00:00';
+            if (now < morningStartValue) {
+                morningTimeString = '时间未到';
+                afternoonTimeString = '时间未到';
+            }
+            if (now >= morningStartValue && now <= morningEndValue) {
+                morningDiff = morningEndValue - now;
+                const morningHours = Math.floor(morningDiff / (1000 * 60 * 60));
+                const morningMinutes = Math.floor((morningDiff % (1000 * 60 * 60)) / (1000 * 60));
+                const morningSeconds = Math.floor((morningDiff % (1000 * 60)) / 1000);
+                morningTimeString = `${String(morningHours).padStart(2, '0')}:${String(morningMinutes).padStart(2, '0')}:${String(morningSeconds).padStart(2, '0')}`;
+            } else if (now > morningEndValue) {
+                morningTimeString = '时间已过';
+            }
+
+            if (now >= morningStartValue && now <= afternoonEndValue) {
+                afternoonDiff = afternoonEndValue - now;
+                const afternoonHours = Math.floor(afternoonDiff / (1000 * 60 * 60));
+                const afternoonMinutes = Math.floor((afternoonDiff % (1000 * 60 * 60)) / (1000 * 60));
+                const afternoonSeconds = Math.floor((afternoonDiff % (1000 * 60)) / 1000);
+                afternoonTimeString = `${String(afternoonHours).padStart(2, '0')}:${String(afternoonMinutes).padStart(2, '0')}:${String(afternoonSeconds).padStart(2, '0')}`;
+            } else if (now > afternoonEndValue) {
+                afternoonTimeString = '已下班';
+            }
+            const clock1 = document.getElementById('clock1');
+            const clock2 = document.getElementById('clock2');
+            clock1.textContent = morningTimeString;
+            clock2.textContent = afternoonTimeString;
+
+            // 解析上班天数，格式为 "已上班天数/总天数"
+            const workDaysText = workDays.textContent;
+            const workDaysMatch = workDaysText.match(/(\d+)\/(\d+)/);
+            const workDaysValue = workDaysMatch ? parseInt(workDaysMatch[2]) : 0; // 使用总天数计算日薪
+            const monthlySalaryValue = parseFloat(monthlySalary.value);
+            if (!isNaN(workDaysValue) && !isNaN(monthlySalaryValue) && now <= afternoonEndValue) {
+                const dailySalary = monthlySalaryValue / workDaysValue;
+                const totalWorkTime = (morningEndValue - morningStartValue) + (afternoonEndValue - afternoonStartValue);
+                let passedTime = 0;
+                if (now >= morningStartValue && now <= morningEndValue) {
+                    passedTime = now - morningStartValue;
+                } else if (now > morningEndValue && now <= afternoonStartValue) {
+                    passedTime = morningEndValue - morningStartValue;
+                } else if (now >= afternoonStartValue && now <= afternoonEndValue) {
+                    passedTime = (morningEndValue - morningStartValue) + (now - afternoonStartValue);
+                }
+                const passedTimeRatio = passedTime / totalWorkTime;
+                const earned = dailySalary * passedTimeRatio;
+                earnedSalary.textContent = `已摸工资：￥ ${earned.toFixed(2)}`;
+            }
+            if (now > afternoonEndValue) {
+                const dailySalary = monthlySalaryValue / workDaysValue;
+                earnedSalary.textContent = `已摸工资：￥ ${dailySalary.toFixed(2)}`;
+            }
+            
+            // 更新当天进度
+            updateDailyProgress(true); // 这里传入true，因为updateClock只在工作模式下调用
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        (function() {
+            const container = document.querySelector('.progress-container');
+            const canvas = container.querySelector('.progress-particles');
+            let dpr = window.devicePixelRatio || 1;
+            let width = container.offsetWidth;
+            let height = container.offsetHeight;
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            canvas.style.width = width + 'px';
+            canvas.style.height = height + 'px';
+            const ctx = canvas.getContext('2d');
+            ctx.scale(dpr, dpr);
+
+            // 粒子参数
+            const DENSITY = 8; // 每像素0.9个粒子（可调）
+            const PARTICLE_RADIUS = 0.5;
+            const PARTICLE_COLORS = ['#ff6b81','#feca57','#48dbfb','#1dd1a1','#5f27cd','#ff9ff3','#f368e0','#00d2d3'];
+            let particles = [];
+            function randomColor() {
+                return PARTICLE_COLORS[Math.floor(Math.random()*PARTICLE_COLORS.length)];
+            }
+            function resetParticle(p, progress) {
+                p.x = Math.random() * (progress * width + 10) - 5;
+                p.y = Math.random() * (height + 10) - 5;
+                p.radius = PARTICLE_RADIUS + Math.random()*0.7;
+                p.color = randomColor();
+                p.alpha = 0.7 + Math.random()*0.3;
+                p.vx = (Math.random()-0.5)*0.15;
+                p.vy = (Math.random()-0.5)*0.15;
+                p.life = 80 + Math.random()*60;
+                p.maxLife = p.life;
+            }
+            function adjustParticles(progress) {
+                let targetCount = Math.max(10, Math.floor(progress * width * DENSITY));
+                // 增加粒子
+                while (particles.length < targetCount) {
+                    let p = {};
+                    resetParticle(p, progress);
+                    particles.push(p);
+                }
+                // 减少粒子
+                while (particles.length > targetCount) {
+                    particles.pop();
+                }
+            }
+            function drawParticles(progress) {
+                // 每帧都同步canvas尺寸
+                let newWidth = container.offsetWidth;
+                let newHeight = container.offsetHeight;
+                if (newWidth !== width || newHeight !== height) {
+                    width = newWidth;
+                    height = newHeight;
+                    canvas.width = width * dpr;
+                    canvas.height = height * dpr;
+                    canvas.style.width = width + 'px';
+                    canvas.style.height = height + 'px';
+                    ctx.setTransform(1,0,0,1,0,0);
+                    ctx.scale(dpr, dpr);
+                }
+                adjustParticles(progress);
+                ctx.clearRect(0,0,width,height);
+                // 修正：左端用arc画半圆，右端也用arc画半圆
+                ctx.save();
+                let r = height / 2;
+                ctx.beginPath();
+                // 左端半圆
+                ctx.arc(r, r, r, Math.PI/2, Math.PI*3/2, false);
+                // 顶部直线到右端
+                ctx.lineTo(progress * width - r, 0);
+                // 右端半圆（如果进度大于0）
+                if (progress > 0) {
+                    ctx.arc(progress * width - r, r, r, Math.PI*3/2, Math.PI/2, false);
+                }
+                ctx.closePath();
+                ctx.clip();
+                for(let p of particles) {
+                    // 只绘制在已完成区域的粒子
+                    if (p.x < progress * width + 8) {
+                        ctx.save();
+                        ctx.globalAlpha = p.alpha * (p.life/p.maxLife);
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.radius, 0, Math.PI*2);
+                        ctx.fillStyle = p.color;
+                        ctx.shadowColor = p.color;
+                        ctx.shadowBlur = 4;
+                        ctx.fill();
+                        ctx.restore();
+                    }
+                    // update
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.life--;
+                    // 如果超出已完成区域太多或寿命到期，重置
+                    if(p.life<=0 || p.x > progress*width+12 || p.x < -12 || p.y < -12 || p.y > height+12) resetParticle(p, progress);
+                }
+                ctx.restore();
+            }
+            // 监听进度变化
+            function getProgress() {
+                // 直接从百分比span获取
+                const percentSpan = document.getElementById('progress-percentage');
+                if (!percentSpan) return 0;
+                const txt = percentSpan.textContent;
+                if (!txt) return 0;
+                return Math.min(1, Math.max(0, parseInt(txt)/100));
+            }
+            function animate() {
+                let progress = getProgress();
+                drawParticles(progress);
+                requestAnimationFrame(animate);
+            }
+            // 初始化
+            adjustParticles(0.01);
+            animate();
+            // 每次窗口resize时重设canvas
+            window.addEventListener('resize',()=>{
+                width = container.offsetWidth;
+                height = container.offsetHeight;
+                canvas.width = width * dpr;
+                canvas.height = height * dpr;
+                canvas.style.width = width + 'px';
+                canvas.style.height = height + 'px';
+                ctx.setTransform(1,0,0,1,0,0);
+                ctx.scale(dpr, dpr);
+            });
+        })();
+    </script>
+</body>
+
+</html>
